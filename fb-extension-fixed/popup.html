@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>FB Group Scraper</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      color: #1c1e21;
+    }
+
+    .header {
+      background: #1877f2;
+      color: white;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header .icon { font-size: 22px; }
+    .header h1 { font-size: 15px; font-weight: 700; }
+    .header small { font-size: 11px; opacity: 0.85; display: block; }
+
+    .toggle-row {
+      background: white;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e4e6eb;
+    }
+
+    .toggle-label { font-size: 13px; font-weight: 600; }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #ccc;
+      border-radius: 24px;
+      transition: .3s;
+    }
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: .3s;
+    }
+    input:checked + .slider { background: #1877f2; }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    .stats {
+      background: white;
+      padding: 14px 16px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid #e4e6eb;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: #f0f2f5;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-number { font-size: 24px; font-weight: 700; color: #1877f2; }
+    .stat-label { font-size: 10px; color: #65676b; margin-top: 2px; }
+
+    .last-post {
+      background: white;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e4e6eb;
+      min-height: 56px;
+    }
+    .last-post-title { font-size: 10px; color: #65676b; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    #lastPostInfo { font-size: 12px; color: #1c1e21; }
+
+    .actions {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: white;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    button:hover { opacity: .85; }
+
+    .btn-json { background: #1877f2; color: white; }
+    .btn-csv  { background: #42b883; color: white; }
+    .btn-view { background: #e4e6eb; color: #1c1e21; }
+    .btn-clear { background: #fff0f0; color: #e74c3c; border: 1px solid #ffd0d0; }
+
+    .status {
+      padding: 8px 16px;
+      font-size: 11px;
+      color: #65676b;
+      text-align: center;
+      background: #f0f2f5;
+      min-height: 28px;
+    }
+    .status.success { color: #42b883; font-weight: 600; }
+    .status.error   { color: #e74c3c; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <span class="icon">📥</span>
+    <div>
+      <h1>FB Group Scraper</h1>
+      <small>Posts + Comentários</small>
+    </div>
+  </div>
+
+  <div class="toggle-row">
+    <span class="toggle-label">🟢 Captura ativa</span>
+    <label class="toggle">
+      <input type="checkbox" id="toggleCapture" checked />
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-number" id="postCount">0</div>
+      <div class="stat-label">Posts salvos</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="commentCount">0</div>
+      <div class="stat-label">Comentários</div>
+    </div>
+  </div>
+
+  <div class="last-post">
+    <div class="last-post-title">Último capturado</div>
+    <div id="lastPostInfo">Nenhum post ainda...</div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-json" id="exportJson">⬇️ Exportar JSON</button>
+    <button class="btn-csv"  id="exportCsv">📊 Exportar CSV</button>
+    <button class="btn-view" id="viewData">👁️ Visualizar dados</button>
+    <button class="btn-clear" id="clearData">🗑️ Limpar tudo</button>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

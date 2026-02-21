@@ -1,13 +1,10 @@
 {
   "manifest_version": 3,
   "name": "FB Group Scraper - Posts & Comentários",
-  "version": "3.0",
-  "description": "Salva posts e comentários de grupos do Facebook com painel flutuante",
+  "version": "1.0",
+  "description": "Salva posts e comentários de grupos do Facebook",
   "permissions": ["storage", "activeTab", "scripting"],
   "host_permissions": ["https://www.facebook.com/*"],
-  "background": {
-    "service_worker": "background.js"
-  },
   "content_scripts": [
     {
       "matches": ["https://www.facebook.com/groups/*"],
@@ -16,6 +13,6 @@
     }
   ],
   "action": {
-    "default_tooltip": "Abrir FB Scraper"
+    "default_popup": "popup.html"
   }
 }
